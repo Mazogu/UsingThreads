@@ -59,21 +59,41 @@ public class MainActivity extends AppCompatActivity implements Handler.Callback 
         switch (num){
             case 0:
                 zero.setProgress(progress);
+                changeColor(zero);
                 break;
              case 1:
                 one.setProgress(progress);
+                changeColor(one);
                 break;
              case 2:
                 two.setProgress(progress);
+                changeColor(two);
                 break;
              case 3:
                 three.setProgress(progress);
+                changeColor(three);
                 break;
              case 4:
                 four.setProgress(progress);
+                changeColor(four);
                 break;
 
         }
         return false;
+    }
+    public void changeColor (ProgressBar bar){
+        int progress = bar.getProgress();
+        if(progress >= 100){
+            bar.setBackgroundColor(getResources().getColor(R.color.complete));
+        }
+        else if(progress >= 75){
+            bar.setBackgroundColor(getResources().getColor(R.color.seventyfive));
+        }
+        else if(progress >= 50){
+            bar.setBackgroundColor(getResources().getColor(R.color.half));
+        }
+        else if(progress >= 25){
+            bar.setBackgroundColor(getResources().getColor(R.color.twentyfive));
+        }
     }
 }
