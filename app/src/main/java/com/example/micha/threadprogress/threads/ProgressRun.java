@@ -25,10 +25,16 @@ public class ProgressRun implements Runnable{
 
     @Override
     public void run() {
-        for (int i = 0; i < toReach ; i++) {
+        for (int i = 0; i <= toReach ; i++) {
               int percent = (int) Math.round(i/toReach);
               if(percent%10==0){
                   sendProgress(i,percent);
+              }
+              try {
+                  Thread.sleep(500);
+              }
+              catch (InterruptedException e) {
+                  e.printStackTrace();
               }
         }
     }
