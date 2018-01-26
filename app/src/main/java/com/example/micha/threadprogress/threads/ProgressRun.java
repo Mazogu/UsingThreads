@@ -3,6 +3,8 @@ package com.example.micha.threadprogress.threads;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+import android.widget.ProgressBar;
 
 import com.example.micha.threadprogress.utils.Constants;
 
@@ -13,9 +15,11 @@ import com.example.micha.threadprogress.utils.Constants;
  */
 
 public class ProgressRun implements Runnable{
-    Handler handler;
-    int number;
-    double toReach;
+
+    public static final String TAG = ProgressRun.class.getSimpleName();
+    private Handler handler;
+    private int number;
+    private double toReach;
 
     public ProgressRun(Handler handler, int number, double toReach) {
         this.handler = handler;
@@ -26,9 +30,9 @@ public class ProgressRun implements Runnable{
     @Override
     public void run() {
         for (int i = 0; i <= toReach ; i++) {
-              int percent = (int) Math.round(i/toReach);
+              int percent = (int) Math.round(i/toReach*100);
               if(percent%10==0){
-                  sendProgress(i,percent);
+                  sendProgress(percent);
               }
               try {
                   Thread.sleep(500);
@@ -40,12 +44,13 @@ public class ProgressRun implements Runnable{
     }
 
 
-    private void sendProgress(int currentProgress, int percent){
+    private void sendProgress(int percent){
         Bundle bundle = new Bundle();
         bundle.putInt(Constants.KEYS.NUMPROGRESS,number);
-        bundle.putInt(Constants.KEYS.PROGRESS,currentProgress);
+        bundle.putInt(Constants.KEYS.PROGRESS,percent);
         Message message = new Message();
         message.setData(bundle);
         handler.sendMessage(message);
+        Log.d(TAG, "sendProgress: "+percent+" "+Thread.currentThread());
     }
 }
